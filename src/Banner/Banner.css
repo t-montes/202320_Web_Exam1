@@ -1,0 +1,13 @@
+/* import and use Mensrea font */
+
+.Banner {
+    font-family: 'Mensrea', cursive;
+    font-weight: normal;
+}
+
+.Banner img {
+    width: 80%;
+    /* height maximum 40% of the screen, crop the image to fit */
+    max-height: 30vh;
+    object-fit: cover;
+}
