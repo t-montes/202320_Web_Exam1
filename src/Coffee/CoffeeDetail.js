@@ -6,7 +6,7 @@ import Card from 'react-bootstrap/Card';
 function CoffeeDetail({ coffee }) {
     return (
         <div className="CoffeeDetail">
-            <Card style={{ width: '18rem' }}>
+            <Card style={{ width: '18rem', backgroundColor: '#FBF1F1' }}>
                 <Card.Body>
                     <Card.Title className="bold">{coffee.nombre.toUpperCase()}</Card.Title>
                     <Card.Subtitle className="mb-2 text-muted">{coffee.fechaCultivo}</Card.Subtitle>
