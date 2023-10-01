@@ -11,26 +11,74 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
-    const lgdIn = localStorage.getItem("loggedIn");
+    let lgdIn = localStorage.getItem("loggedIn");
     if (lgdIn === null) {
-      localStorage.setItem("loggedIn", false);
+      localStorage.setItem("loggedIn", "false");
+      lgdIn = "false";
     }
+    lgdIn = lgdIn === "true";
 
     // redirect to login if not logged in
     if (!lgdIn) {
       if (window.location.pathname !== "/login")
         window.location.href = "/login";
+    } else {
+      if (window.location.pathname === "/login")
+        changeLoggedIn(false);
     }
     setLoggedIn(lgdIn);
   }, []);
 
-  const changeLoggedIn = (() => {
-    localStorage.setItem("loggedIn", !loggedIn);
-    setLoggedIn(!loggedIn);
+  const loadCoffees = (async () => {
+    return await fetch("http://localhost:3001/cafes")
+      .then(res => {
+        return res.json()
+      })
+      .then(data => {
+        return data;
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  });
+
+  const getCoffee = (async (id) => {
+    return await fetch("http://localhost:3001/cafes/" + id)
+      .then(res => {
+        return res.json()
+      })
+      .then(data => {
+        return data;
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  });
+
+  const getLoggedIn = (async (login, password) => {
+    return await fetch("http://localhost:3001/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({login, password})
+    })
+      .then(res => {
+        return res.status === 200;
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  });
+
+  const changeLoggedIn = ((v) => {
+    localStorage.setItem("loggedIn", v);
+    setLoggedIn(v);
   });
 
   const ctx = {
-    loggedIn, changeLoggedIn
+    loggedIn, changeLoggedIn,
+    loadCoffees, getCoffee, getLoggedIn
   };
   return (
     <div className="App">

@@ -6,14 +6,16 @@ import Card from 'react-bootstrap/Card';
 function CoffeeDetail({ coffee }) {
     return (
         <div className="CoffeeDetail">
-            <Card style={{ width: '18rem', backgroundColor: '#FBF1F1' }}>
-                <Card.Body>
+            <Card className="CoffeeDetail-card">
+                <Card.Body className="CoffeeDetail-card-body">
                     <Card.Title className="bold">{coffee.nombre.toUpperCase()}</Card.Title>
-                    <Card.Subtitle className="mb-2 text-muted">{coffee.fechaCultivo}</Card.Subtitle>
+                    <Card.Subtitle className="mb-2 text-muted">{coffee.fecha_cultivo}</Card.Subtitle>
                     <Card.Img variant="top" src={coffee.imagen} />
-                    <Card.Text>
-                        <p>Notas<br/>{coffee.notas.join(", ")}</p>
-                        <p className="bold">Cultivado a una altura de {coffee.alturaCultivo} msnm</p>
+                    <Card.Text className="CoffeeDetail-downtext">
+                        Notas<br/>{coffee.notas}
+                    </Card.Text>
+                    <Card.Text className="bold CoffeeDetail-downtext">
+                    Cultivado a una altura de {coffee.altura} msnm
                     </Card.Text>
                 </Card.Body>
             </Card>

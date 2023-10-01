@@ -3,22 +3,25 @@ import React, { useState, useEffect, useContext } from 'react';
 import AppContext from "../AppContext";
 import CoffeeDetail from "./CoffeeDetail";
 
-const coffees = [
-    {
-        // list
-        nombre: "Café Especial para ti",
-        tipo: "Blend",
-        region: "Angelópolis, Antioquia",
-        // detail
-        fechaCultivo: "2023-01-18",
-        imagen: "https://latiendadelcafe.co/cdn/shop/products/cafe-especial-para-ti-cafe-colombiano_720x.png?v=1670856834",
-        notas: ["panela", "durazno", "caramelo"],
-        alturaCultivo: 1920
-    }
-]
+function CoffeeList() {    
+    const { loadCoffees, getCoffee } = useContext(AppContext);
 
-function CoffeeList() {
-    const [selectedCoffee, setSelectedCoffee] = useState(null);//null);
+    const [coffees, setCoffees] = useState([]);
+    const [selectedCoffee, setSelectedCoffee] = useState(null);
+
+    const selectCoffee = (async (id) => {
+        const coffee = await getCoffee(id);
+        setSelectedCoffee(coffee);
+    });
+
+    // useeffect to await load coffees and set the result to coffees
+    useEffect(() => {
+        loadCoffees().then((data) => {
+            console.log(data);
+            setCoffees(data);
+        });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         <div className="Coffee">
@@ -35,7 +38,7 @@ function CoffeeList() {
                         </thead>
                         <tbody>
                             {coffees.map((coffee, index) => (
-                                <tr key={index} onClick={() => setSelectedCoffee(coffee)}>
+                                <tr key={index} onClick={() => selectCoffee(coffee.id)}>
                                     <th scope="row">{index+1}</th>
                                     <td>{coffee.nombre}</td>
                                     <td>{coffee.tipo}</td>

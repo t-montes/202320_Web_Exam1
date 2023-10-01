@@ -1,78 +1,58 @@
 import "./Login.css"
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import AppContext from "../AppContext";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
 function Login() {
-    const { loggedIn, changeLoggedIn } = useContext(AppContext);
+    const { getLoggedIn, changeLoggedIn } = useContext(AppContext);
 
     const [formValues, setFormValues] = useState({email:"", password:"", favClass:"1"})
-    const [validationStates, setValidationStates] = useState({emailState:true, passwordState:true})
     const [authError, setAuthError] = useState(false);
     
     const handleFormChange = ((e) => {
-      switch(e.target.name){
-        case "password":
-          setValidationStates({...validationStates, passwordState: validatePassword(e.target.value)});
-          break;
-        default:
-          break;
-      }
       setFormValues({...formValues, [e.target.name]: e.target.value});
     });
   
     const clickSubmit = (() => {
-      const emailState = validateEmail(formValues.email);
-      const passwordState = validatePassword(formValues.password);
-      setValidationStates({
-        emailState, passwordState
+
+      getLoggedIn(formValues.email, formValues.password)
+      .then((data) => {
+        if (data) {
+          changeLoggedIn(true);
+          setAuthError(false);
+          window.location.href = "/coffee";
+        } else {
+          setAuthError(true);
+        }
       });
-      if (emailState && passwordState) {
-        changeLoggedIn();
-        window.location.href = "/coffee";
-      }
-    });
-  
-    const validateEmail = ((email) => {
-      const re = /\S+@\S+\.\S+/;
-      const isValid = re.test(email);
-      console.log("validateEmail", isValid);
-      return isValid;
-    });
-  
-    const validatePassword = ((password) => {
-      const re = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{9,}$/;
-      const isValid = re.test(password);
-      console.log("validatePassword", isValid);
-      return isValid;
     });
   
     return (
         <div className="Login">
-            <h2>Inicio de sesión</h2>
+            <h4 className="bold">Inicio de sesión</h4>
             <div className="Login-form">
                 <Form>
                     <Form.Group className="mb-6" controlId="formBasicEmail">
-                        <Form.Label>Nombre de usuario</Form.Label>
-                        <Form.Control type="email" placeholder="Enter email" onChange={handleFormChange} name="email" className={
-                        (!validationStates.emailState && "invalid")+" login-input"}/>
-                        { !validationStates.emailState && <Form.Text className="text-muted">The email is not valid</Form.Text>}
+                        <Form.Label className="bold">Nombre de usuario</Form.Label>
+                        <Form.Control type="email" onChange={handleFormChange} name="email" className={
+                        (authError && "invalid")+" Login-input"}/>
                     </Form.Group>
                 
                     <Form.Group className="mb-3" controlId="formBasicPassword">
-                        <Form.Label>Contraseña</Form.Label>
-                        <Form.Control type="password" placeholder="Password" onChange={handleFormChange} name="password" className={
-                        (!validationStates.passwordState && "invalid")+" login-input"}/>
-                        { !validationStates.passwordState && <Form.Text className="text-muted">Your password should be have numbers and letters and should be at least 9 char long</Form.Text>}
+                        <Form.Label className="bold">Contraseña</Form.Label>
+                        <Form.Control type="password" onChange={handleFormChange} name="password" className={
+                        (authError && "invalid")+" Login-input"}/>
                     </Form.Group>
-                        <Button variant="primary" onClick={clickSubmit}>
+                    <div className="Login-buttons">
+                        <Button variant="primary" onClick={clickSubmit} className="Login-submit Login-button">
                             Ingresar
                         </Button>
-                        <Button variant="secondary" href="/">
+                        <Button variant="secondary" href="/" className="Login-cancel Login-button">
                             Cancelar
                         </Button>
-                    <p className={authError ? "" : "hidden"}>Error de autenticación. Revise sus credenciales</p>
+                    </div>
+                    <p className={(authError ? "" : "hidden")+" Login-error"}>Error de autenticación. Revise sus credenciales</p>
                 </Form>
             </div>
         </div>

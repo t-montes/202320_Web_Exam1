@@ -2,6 +2,27 @@
     text-align: center;
 }
 
+.CoffeeDetail-card {
+    width: 16rem;
+    background-color: #FBF1F1;
+    border: 1px solid black;
+}
+
+.CoffeeDetail-card-body {
+    padding: 0 6%;
+}
+
+.CoffeeDetail-card:hover {
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.25);
+}
+
+.CoffeeDetail-card img {
+    height: 10rem;
+    width: auto;
+    max-width: 100%;
+    background-color: white;
+}
+
 .bold {
     font-weight: bold;
 }

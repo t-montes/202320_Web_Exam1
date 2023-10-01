@@ -6,8 +6,8 @@
 }
 
 .Banner img {
-    width: 80%;
+    width: 100%;
     /* height maximum 40% of the screen, crop the image to fit */
-    max-height: 30vh;
+    max-height: 25vh;
     object-fit: cover;
 }
