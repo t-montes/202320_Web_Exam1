@@ -6,9 +6,17 @@ import Login from "./Login/Login";
 import CoffeeList from "./Coffee/CoffeeList";
 import Banner from "./Banner/Banner";
 import Footer from "./Footer/Footer";
+import { IntlProvider } from 'react-intl';
+
+import es from "./locales/es.json";
+import en from "./locales/en.json";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
+
+  const userLanguage = navigator.language || navigator.userLanguage;
+  const locale = userLanguage.split('-')[0];
+  const messages = locale === 'es' ? es : en;
 
   useEffect(() => {
     let lgdIn = localStorage.getItem("loggedIn");
@@ -82,16 +90,18 @@ function App() {
   };
   return (
     <div className="App">
-      <AppContext.Provider value={ctx}>
-        <Banner/>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/login" element={<Login/>} />
-            <Route path="/coffee" element={<CoffeeList/>} />
-          </Routes>
-        </BrowserRouter>
-        <Footer/>
-      </AppContext.Provider>
+      <IntlProvider locale={locale} messages={messages}>
+        <AppContext.Provider value={ctx}>
+          <Banner/>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/login" element={<Login/>} />
+              <Route path="/coffee" element={<CoffeeList/>} />
+            </Routes>
+          </BrowserRouter>
+          <Footer/>
+        </AppContext.Provider>
+      </IntlProvider>
     </div>
   );
 }

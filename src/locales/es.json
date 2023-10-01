@@ -1,0 +1,16 @@
+{
+    "Name": "Nombre",
+    "Type": "Tipo",
+    "Region": "Región",
+    "Notes": "Notas",
+    "Grown": "Cultivado a una altura de",
+    "masl": "msnm",
+    "ContactUs": "Contáctanos",
+    "Login": "Inicio de sesión",
+    "Username": "Nombre de usuario",
+    "Password": "Contraseña",
+    "Submit": "Ingresar",
+    "Cancel": "Cancelar",
+    "AuthError": "Error de autenticación. Revise sus credenciales",
+    "Title": "El aroma mágico"
+}

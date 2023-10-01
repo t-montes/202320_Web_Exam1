@@ -2,6 +2,7 @@ import "./CoffeeList.css";
 import React, { useState, useEffect, useContext } from 'react';
 import AppContext from "../AppContext";
 import CoffeeDetail from "./CoffeeDetail";
+import { FormattedMessage } from 'react-intl';
 
 function CoffeeList() {    
     const { loadCoffees, getCoffee } = useContext(AppContext);
@@ -17,7 +18,6 @@ function CoffeeList() {
     // useeffect to await load coffees and set the result to coffees
     useEffect(() => {
         loadCoffees().then((data) => {
-            console.log(data);
             setCoffees(data);
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -31,9 +31,9 @@ function CoffeeList() {
                         <thead className="thead-dark">
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Nombre</th>
-                                <th scope="col">Tipo</th>
-                                <th scope="col">Región</th>
+                                <th scope="col"><FormattedMessage id="Name"/></th>
+                                <th scope="col"><FormattedMessage id="Type"/></th>
+                                <th scope="col"><FormattedMessage id="Region"/></th>
                             </tr>
                         </thead>
                         <tbody>

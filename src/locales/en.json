@@ -1,0 +1,16 @@
+{
+    "Name": "Name",
+    "Type": "Type",
+    "Region": "Region",
+    "Notes": "Notes",
+    "Grown": "Grown at an altitude of",
+    "masl": "masl",
+    "ContactUs": "Contact Us",
+    "Login": "Login",
+    "Username": "Username",
+    "Password": "Password",
+    "Submit": "Submit",
+    "Cancel": "Cancel",
+    "AuthError": "Authentication error. Check your credentials",
+    "Title": "The magic scent"
+}
